@@ -23,7 +23,7 @@ export class UserService {
 
    /** GET users from the server */
    getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    return this.http.get<User[]>(`${this.BASE_URL}/api/users`);
   }
   
   /** GET user by id. Will 404 if id not found */
