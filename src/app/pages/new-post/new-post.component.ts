@@ -2,6 +2,7 @@ import { Component,Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/models/post';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
@@ -22,15 +23,14 @@ export class NewPostComponent {
   content:string="";
   posts: Post[];
   newPost:Post;
- 
-
-  message:string="";
+  errorMessage:string = "";
   
   constructor(
     private router:Router, 
     private data: DataService, 
     private postService:PostService, 
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ){
 
     this.user= new User();
@@ -46,7 +46,8 @@ export class NewPostComponent {
   }
   
   getUser(): void {
-    this.userService.getUserData().subscribe(
+    const uid = Number(this.authService.getUid());
+    this.userService.getUserById(uid).subscribe(
       (data) => {
         this.user = data;
       }
@@ -64,6 +65,11 @@ export class NewPostComponent {
   }
 
   createNewPost() {
+    if(this.newPost.label == null){
+      this.errorMessage = "You cannot post without selecting a label.";
+      return;
+    }
+    
     this.postService.addPost(this.newPost)
     .subscribe(
       (data) => {
