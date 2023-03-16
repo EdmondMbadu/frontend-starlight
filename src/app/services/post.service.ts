@@ -32,7 +32,7 @@ export class PostService {
   }
 
   getPost(id: number) {
-    return this.http.get('/api/posts/' + id);
+    return this.http.get(`${this.BASE_URL}/api/posts/${id}`);
   }
 
   // makeNewPost(title:string, content:string, label:string, likes:number, author_id:number): Observable<Post> {
