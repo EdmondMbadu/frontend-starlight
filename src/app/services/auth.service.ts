@@ -12,7 +12,7 @@ const httpOptions = {
 })
 export class AuthService {
   // private apiBaseUrl = 'http://localhost:5000';
-  private BASE_URL: string = 'http://localhost:5000';
+  private BASE_URL: string = 'https://backend-starlight.herokuapp.com';
 
   private registerUrl = 'http://localhost:5000/api/register';
   private logoutUrl = 'http://localhost:5000/api/logout';
@@ -46,19 +46,19 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     let url: string = `${this.BASE_URL}/api/login`; //`${this.apiBaseUrl}/register`
     // return this.http.post<any>(url, {email, password}, httpOptions);
-    return this.http.post<any>('/api/login', {email, password}, httpOptions);
+    return this.http.post<any>(`${this.BASE_URL}/api/login`, {email, password}, httpOptions);
   }
 
   register(email: string, first:string, last:string, password: string): Observable<any> {
     let url: string = `${this.BASE_URL}/register`; //`${this.apiBaseUrl}/register`
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>('/api/register', { email, first, last, password }, httpOptions);
+    return this.http.post<any>(`${this.BASE_URL}/api/register`, { email, first, last, password }, httpOptions);
   }
 
   forgotPassword(email: string): Observable<any> {
     // const url = `${this.BASE_URL}/forgot_password`;
     // return this.http.post(url, { email });
-    return this.http.post<any>('/api/forgot_password', { email });
+    return this.http.post<any>(`${this.BASE_URL}/api/forgot_password`, { email });
   }
 
   resetPassword(userId:number, newPassword:string, confirmPassword:string): Observable<any> {
@@ -69,15 +69,15 @@ export class AuthService {
       new_password: newPassword,
       confirm_password: confirmPassword
     };
-    return this.http.post<any>('/api/reset_password', body);
+    return this.http.post<any>(`${this.BASE_URL}/api/reset_password`, body);
   }
 
   logout(): Observable<any> {
     localStorage.removeItem(this.tokenKey);
-    return this.http.get<any>('/api/logout');
+    return this.http.get<any>(`${this.BASE_URL}/api/logout`);
   }
 
   getData(): Observable<any> {
-    return this.http.get<any>('/api/data');
+    return this.http.get<any>(`${this.BASE_URL}/api/data`);
   }
 }
