@@ -36,7 +36,7 @@ export class UserService {
 
   getUserData(): Observable<User> {
     // Pass the session ID in the withCredentials option
-    return this.http.get<User>(`${this.BASE_URL}/api/current-user`, { withCredentials: true });
+    return this.http.get<User>(`${this.BASE_URL}/api/current_user`, { withCredentials: true });
     // { withCredentials: true }
   }
   /** PUT: update the user on the server */
