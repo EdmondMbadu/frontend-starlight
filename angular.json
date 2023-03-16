@@ -59,10 +59,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "starlight-ng:build",
-            "proxyConfig": "proxy.conf.json"
-          },
+          //"options": {
+           // "browserTarget": "starlight-ng:build",
+           // "proxyConfig": "proxy.conf.json"
+          //},
           "configurations": {
             "production": {
               "browserTarget": "starlight-ng:build:production"
