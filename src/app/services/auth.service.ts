@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json',Accept:'application/json' })
 };
 
 @Injectable({
@@ -14,6 +14,7 @@ export class AuthService {
   // private apiBaseUrl = 'http://localhost:5000';
   private BASE_URL: string = 'https://backend-starlight.herokuapp.com';
 
+  private uid="uid";
   private registerUrl = 'http://localhost:5000/api/register';
   private logoutUrl = 'http://localhost:5000/api/logout';
   private dataUrl = 'http://localhost:5000/api/data';
@@ -23,6 +24,13 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.loggedIn  = !!localStorage.getItem('access_token');
+  }
+  setUid(uid: string): void {
+    
+    localStorage.setItem(this.uid, uid);
+  }
+  getUid(){
+    return localStorage.getItem(this.uid);
   }
 
   test(): string {
@@ -47,7 +55,7 @@ export class AuthService {
     let url: string = `${this.BASE_URL}/api/login`; //`${this.apiBaseUrl}/register`
     // return this.http.post<any>(url, {email, password}, httpOptions);
     const options = { withCredentials: true};
-    return this.http.post<any>(`${this.BASE_URL}/api/login`, {email, password}, options);
+    return this.http.post<any>(`${this.BASE_URL}/api/login`, {email, password}, httpOptions);
   }
 
   register(email: string, first:string, last:string, password: string): Observable<any> {
@@ -75,6 +83,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.uid);
     return this.http.get<any>(`${this.BASE_URL}/api/logout`);
   }
 
