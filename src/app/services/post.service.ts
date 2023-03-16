@@ -10,6 +10,7 @@ import { Comment } from '../models/comment';
   providedIn: 'root'
 })
 export class PostService {
+   private BASE_URL: string = 'https://backend-starlight.herokuapp.com';
   private postsApiUrl = 'http://localhost:5000/api/posts';
   private newpostUrl = 'http://localhost:5000/api/new-post';
   private deletePostUrl = 'http://localhost:5000/api/delete-post';
